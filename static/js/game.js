@@ -1,9 +1,8 @@
 var objDiv = null;
 var gameArea = document.getElementById("game-area");
 var player = document.getElementById("image");
+gameArea.style.width = (player.offsetWidth * 51).toString() + "px";
 var gameAreaWidth = gameArea.offsetWidth;
-player.style.width = (gameAreaWidth / 51).toString() + "px";
-player.style.height = (gameAreaWidth / 51).toString() + "px";
 gameArea.style.height = (player.offsetWidth * 25).toString();
 var gameAreaHeight = gameArea.offsetHeight;
 var playerWidth = player.offsetWidth;
@@ -40,27 +39,27 @@ function getKeyAndMove(e) {
 
 function moveLeft() {
     if (objDiv.style.left !== '0px' && checkCoordinate(objDiv.style.left, objDiv.style.top, "left") === true) {
-        objDiv.style.left = parseInt(objDiv.style.left) - 5 + 'px';
+        objDiv.style.left = parseInt(objDiv.style.left) - 10 + 'px';
     }
 }
 
 function moveUp() {
     if (objDiv.style.top !== '0px' && checkCoordinate(objDiv.style.left, objDiv.style.top, "up") === true) {
-        objDiv.style.top = parseInt(objDiv.style.top) - 5 + 'px';
+        objDiv.style.top = parseInt(objDiv.style.top) - 10 + 'px';
     }
 
 }
 
 function moveRight() {
     if (objDiv.style.left !== countGameAreaSize(gameAreaWidth) && checkCoordinate(objDiv.style.left, objDiv.style.top, "right") === true) {
-        objDiv.style.left = parseInt(objDiv.style.left) + 5 + 'px';
+        objDiv.style.left = parseInt(objDiv.style.left) + 10 + 'px';
     }
 
 }
 
 function moveDown() {
     if (objDiv.style.top !== countGameAreaSize(gameAreaHeight) && checkCoordinate(objDiv.style.left, objDiv.style.top, "down") === true) {
-        objDiv.style.top = parseInt(objDiv.style.top) + 5 + 'px';
+        objDiv.style.top = parseInt(objDiv.style.top) + 10 + 'px';
     }
 
 }
@@ -120,9 +119,26 @@ function countGameAreaSize(size) {
 
 function saveTakenCoordinate(height, width) {
     let coordinate = width.toString() + "-" + height.toString()
+    forbiddenCoordinate.push(coordinate);
+    let coordinate1 = (width - 10).toString() + "-" + height.toString()
+    forbiddenCoordinate.push(coordinate1);
+    let coordinate2 = (width - 10).toString() + "-" + (height - 10).toString()
+    forbiddenCoordinate.push(coordinate2);
+    let coordinate3 = (width - 10).toString() + "-" + (height + 10).toString()
+    forbiddenCoordinate.push(coordinate3);
+    let coordinate4 = width.toString() + "-" + (height - 10).toString()
+    forbiddenCoordinate.push(coordinate4);
+    let coordinate5 = width.toString() + "-" + (height + 10).toString()
+    forbiddenCoordinate.push(coordinate5);
+    let coordinate6 = (width + 10).toString() + "-" + (height - 10).toString()
+    forbiddenCoordinate.push(coordinate6);
+    let coordinate7 = (width + 10).toString() + "-" + (height + 10).toString()
+    forbiddenCoordinate.push(coordinate7);
+    let coordinate8 = (width + 10).toString() + "-" + height.toString()
+    forbiddenCoordinate.push(coordinate8);
+
     // let indexOfItem = freeCoordinateToMove.indexOf(coordinate)
     // freeCoordinateToMove.splice(indexOfItem, 1);
-    forbiddenCoordinate.push(coordinate)
 
 }
 
@@ -165,6 +181,8 @@ function init() {
     objDiv.style.left = '0px';
     objDiv.style.top = '0px';
     saveFreeToMoveCoordinate()
+    console.log(freeCoordinateToMove)
+    console.log(forbiddenCoordinate)
     placeTombs()
 
 }

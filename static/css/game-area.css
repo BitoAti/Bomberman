@@ -1,11 +1,16 @@
-
+#container{
+    margin-left: auto;
+    margin-right: auto;
+}
 
 
 #game-area {
     background-color: lightblue;
-    width: 1020px;
-    margin: auto 0;
+
+    margin-left: auto;
+    margin-right: auto;
 }
+
 
 .tomb {
     background-color: grey;
