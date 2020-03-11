@@ -1,0 +1,33 @@
+#container {
+    background-color: lightblue;
+    width: 70%;
+    height: 70%;
+    position: fixed;
+    top:0;
+    left:0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+
+
+
+
+
+
+
+
+#coainer {
+    border: 2px solid black;
+    background-color: black;
+    width: 20%;
+}
+
+
+
+#coainer:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
