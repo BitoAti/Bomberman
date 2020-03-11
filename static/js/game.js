@@ -75,18 +75,52 @@ function saveFreeToMoveCoordinate() {
     }
 }
 
+function createFire(left, top) {
+
+}
+
+function getBombCoordinate(left,top) {
+    let list = [];
+    console.log(typeof(left), typeof(top))
+    if(left%20 !== 0){
+        list.push(left + 10);
+        list.push(top);
+    }
+    else if(top % 20 !== 0){
+        list.push(left);
+        list.push(top + 10);
+    }
+
+    else {
+        list.push(left);
+        list.push(top);
+    }
+    console.log(list)
+    return list
+}
+
 function createBomb() {
     const gameArea = document.getElementById("game-area");
-    const bomb = document.createElement("div");
+    var bomb = document.createElement("div");
     bomb.classList.add("bomb");
-    bomb.style.left = setBombCoordinate(objDiv.style.left);
-    bomb.style.top = setBombCoordinate(objDiv.style.top);
-    gameArea.appendChild(bomb)
+    let newcoord = getBombCoordinate(parseInt(objDiv.style.left.slice(0, -2)),parseInt(objDiv.style.top.slice(0, -2)));
+    bomb.style.left = setBombCoordinate(newcoord[0]);
+    bomb.style.top = setBombCoordinate(newcoord[1]);
+    gameArea.appendChild(bomb);
+    let coordinate = bomb.style.left.slice(0, -2) + '-' + bomb.style.top.slice(0, -2);
+    forbiddenCoordinate.push(coordinate);
+
+    setTimeout(function deleteBomb() {
+        createFire(bomb.style.left, bomb.style.top);
+        bomb.remove();
+        forbiddenCoordinate.pop(coordinate);
+    }, 2000)
+
+
 }
 
 function setBombCoordinate(playerCoordinate) {
-    let num = parseInt(playerCoordinate.slice(0, -2));
-    return (num + 8).toString() + "px";
+    return (playerCoordinate).toString() + "px";
 }
 
 function placeTombs() {
@@ -99,7 +133,7 @@ function placeTombs() {
             tomb.style.height = playerWidth.toString() + "px";
             tomb.style.top = (column * 2 * playerHeight + 20).toString() + "px";
             tomb.style.left = (row * 2 * playerWidth + 20).toString() + "px";
-            saveTakenCoordinate(column * 2 * playerHeight + basePxHeight - 8, row * 2 * playerWidth + basePxWidth - 8)
+            saveTakenCoordinate(column * 2 * playerHeight + basePxHeight - 8, row * 2 * playerWidth + basePxWidth - 8);
             tomb.classList.add("tomb");
             gameArea.appendChild(tomb)
         }
