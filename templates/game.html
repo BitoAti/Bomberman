@@ -1,16 +1,14 @@
 <!--JavaScript - Move Object with Arrow Keys using JavaScript Function.-->
 <html>
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style/standard-block.css') }}">
-
-{#    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}">#}
-{#    <link rel="stylesheet" href="{{ url_for('static', filename='css/game-area.css') }}">#}
-{#    <link rel="stylesheet" href="{{ url_for('static', filename='css/bomb.css') }}">#}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/game-area.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bomb.css') }}">
 
     <title>Bomberman test</title>
 </head>
 <body onkeydown='getKeyAndMove(event)'>
-<div id="container">
+<div class="container">
     <div id="game-area">
         <div id="image"></div>
     </div>

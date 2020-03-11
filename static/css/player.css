@@ -1,0 +1,17 @@
+#player {
+    background-color: coral;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    left: 0px;
+    top: 0px;
+}
+
+
+#image {
+    background-color: coral;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    border-radius: 300px;
+}

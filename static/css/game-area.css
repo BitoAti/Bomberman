@@ -1,0 +1,15 @@
+
+
+
+#game-area {
+    background-color: lightblue;
+    width: 1020px;
+    margin: auto 0;
+}
+
+.tomb {
+    background-color: grey;
+    border-radius: 4px;
+    position: absolute;
+}
+
