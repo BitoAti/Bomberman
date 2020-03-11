@@ -7,8 +7,8 @@ gameArea.style.height = (player.offsetWidth * 25).toString();
 var gameAreaHeight = gameArea.offsetHeight;
 var playerWidth = player.offsetWidth;
 var playerHeight = player.offsetHeight;
-let freeCoordinateToMove = []
-let forbiddenCoordinate = []
+let freeCoordinateToMove = [];
+let forbiddenCoordinate = [];
 
 
 // getBoundingClientRect()
@@ -97,8 +97,8 @@ function placeTombs() {
             let tomb = createTomb();
             tomb.style.width = playerWidth.toString() + "px";
             tomb.style.height = playerWidth.toString() + "px";
-            tomb.style.top = (column * 2 * playerHeight +20).toString() + "px";
-            tomb.style.left = (row * 2 * playerWidth +20).toString() + "px";
+            tomb.style.top = (column * 2 * playerHeight + 20).toString() + "px";
+            tomb.style.left = (row * 2 * playerWidth + 20).toString() + "px";
             saveTakenCoordinate(column * 2 * playerHeight + basePxHeight - 8, row * 2 * playerWidth + basePxWidth - 8)
             tomb.classList.add("tomb");
             gameArea.appendChild(tomb)
@@ -180,9 +180,8 @@ function init() {
     objDiv.style.position = 'relative';
     objDiv.style.left = '0px';
     objDiv.style.top = '0px';
-    saveFreeToMoveCoordinate()
-    console.log(freeCoordinateToMove)
-    console.log(forbiddenCoordinate)
+    saveFreeToMoveCoordinate();
+    console.log(forbiddenCoordinate);
     placeTombs()
 
 }
