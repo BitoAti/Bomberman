@@ -129,6 +129,7 @@ function placeTombs() {
     for (let row = 0; row < (gameAreaWidth - playerWidth) / (2 * playerWidth); row++) {
         for (let column = 0; column < (gameAreaHeight - playerHeight) / (2 * playerHeight); column++) {
             let tomb = createTomb();
+            tomb.innerHTML = `<img src="/static/images/tomb.png" alt="player" width="20px" height="20px">`;
             tomb.style.width = playerWidth.toString() + "px";
             tomb.style.height = playerWidth.toString() + "px";
             tomb.style.top = (column * 2 * playerHeight + 20).toString() + "px";
@@ -211,6 +212,7 @@ function checkCoordinate(left, top, directionOfMove) {
 
 function init() {
     objDiv = document.getElementById("image");
+    objDiv.innerHTML = `<img src="/static/images/Bman_F_f00.png" alt="player" width="20px" height="20px">`;
     objDiv.style.position = 'relative';
     objDiv.style.left = '0px';
     objDiv.style.top = '0px';
