@@ -10,7 +10,7 @@
 
 #image {
     background-color: coral;
-    position: relative;
+    position: static;
     left: 0px;
     top: 0px;
     width: 20px;

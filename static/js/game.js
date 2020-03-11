@@ -97,8 +97,8 @@ function placeTombs() {
             let tomb = createTomb();
             tomb.style.width = playerWidth.toString() + "px";
             tomb.style.height = playerWidth.toString() + "px";
-            tomb.style.top = (column * 2 * playerHeight + basePxWidth).toString() + "px";
-            tomb.style.left = (row * 2 * playerWidth + basePxHeight).toString() + "px";
+            tomb.style.top = (column * 2 * playerHeight +20).toString() + "px";
+            tomb.style.left = (row * 2 * playerWidth +20).toString() + "px";
             saveTakenCoordinate(column * 2 * playerHeight + basePxHeight - 8, row * 2 * playerWidth + basePxWidth - 8)
             tomb.classList.add("tomb");
             gameArea.appendChild(tomb)
