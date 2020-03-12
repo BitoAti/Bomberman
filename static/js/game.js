@@ -210,9 +210,19 @@ function checkCoordinate(left, top, directionOfMove) {
 }
 
 
+function createWallElement() {
+    let wall = document.createElement("div");
+    wall.classList.add("wall");
+    return wall
+}
+
 function placeWallElement() {
     let numOfWalls = ~~(widthNum * heightNum / 3);
-    console.log(numOfWalls)
+    for(let i = 1; i <= numOfWalls; i++){
+        let wall = createWallElement()
+        console.log(wall)
+    }
+
 }
 
 function init() {
