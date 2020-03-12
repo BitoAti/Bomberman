@@ -1,9 +1,11 @@
 var objDiv = null;
 var gameArea = document.getElementById("game-area");
 var player = document.getElementById("image");
-gameArea.style.width = (player.offsetWidth * 51).toString() + "px";
+var widthNum = 25
+var heightNum = 13
+gameArea.style.width = (player.offsetWidth * widthNum).toString() + "px";
 var gameAreaWidth = gameArea.offsetWidth;
-gameArea.style.height = (player.offsetWidth * 25).toString();
+gameArea.style.height = (player.offsetWidth * heightNum).toString();
 var gameAreaHeight = gameArea.offsetHeight;
 var playerWidth = player.offsetWidth;
 var playerHeight = player.offsetHeight;
@@ -66,7 +68,6 @@ function moveDown() {
 
 // --------------------Game elements--------------------------//
 function saveFreeToMoveCoordinate() {
-
     for (let i = 0; i < gameAreaWidth / playerWidth; i++) {
         for (let n = 0; n < gameAreaHeight / playerHeight; n++) {
             let coordinate = (i * 20).toString() + "-" + (n * 20).toString()
@@ -79,19 +80,16 @@ function createFire(left, top) {
 
 }
 
-function getBombCoordinate(left,top) {
+function getBombCoordinate(left, top) {
     let list = [];
-    console.log(typeof(left), typeof(top))
-    if(left%20 !== 0){
+    console.log(typeof (left), typeof (top))
+    if (left % 20 !== 0) {
         list.push(left + 10);
         list.push(top);
-    }
-    else if(top % 20 !== 0){
+    } else if (top % 20 !== 0) {
         list.push(left);
         list.push(top + 10);
-    }
-
-    else {
+    } else {
         list.push(left);
         list.push(top);
     }
@@ -103,7 +101,7 @@ function createBomb() {
     const gameArea = document.getElementById("game-area");
     var bomb = document.createElement("div");
     bomb.classList.add("bomb");
-    let newcoord = getBombCoordinate(parseInt(objDiv.style.left.slice(0, -2)),parseInt(objDiv.style.top.slice(0, -2)));
+    let newcoord = getBombCoordinate(parseInt(objDiv.style.left.slice(0, -2)), parseInt(objDiv.style.top.slice(0, -2)));
     bomb.style.left = setBombCoordinate(newcoord[0]);
     bomb.style.top = setBombCoordinate(newcoord[1]);
     gameArea.appendChild(bomb);
@@ -172,8 +170,10 @@ function saveTakenCoordinate(height, width) {
     let coordinate8 = (width + 10).toString() + "-" + height.toString()
     forbiddenCoordinate.push(coordinate8);
 
-    // let indexOfItem = freeCoordinateToMove.indexOf(coordinate)
-    // freeCoordinateToMove.splice(indexOfItem, 1);
+    let indexOfItem1 = freeCoordinateToMove.indexOf(coordinate)
+    freeCoordinateToMove.splice(indexOfItem1, 1);
+
+
 
 }
 
@@ -210,6 +210,11 @@ function checkCoordinate(left, top, directionOfMove) {
 }
 
 
+function placeWallElement() {
+    let numOfWalls = ~~(widthNum * heightNum / 3);
+    console.log(numOfWalls)
+}
+
 function init() {
     objDiv = document.getElementById("image");
     objDiv.innerHTML = `<img src="/static/images/Bman_F_f00.png" alt="player" width="20px" height="20px">`;
@@ -217,8 +222,9 @@ function init() {
     objDiv.style.left = '0px';
     objDiv.style.top = '0px';
     saveFreeToMoveCoordinate();
-    console.log(forbiddenCoordinate);
-    placeTombs()
+    console.log(freeCoordinateToMove);
+    placeTombs();
+    placeWallElement();
 
 }
 
