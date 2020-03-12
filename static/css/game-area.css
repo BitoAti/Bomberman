@@ -22,5 +22,6 @@
 
 .wall {
     background-color: saddlebrown;
+    position: absolute;
 }
 
