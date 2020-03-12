@@ -1,4 +1,4 @@
-#container{
+#container {
     margin-left: auto;
     margin-right: auto;
 }
@@ -21,7 +21,37 @@
 
 
 .wall {
-    background-color: saddlebrown;
     position: absolute;
 }
 
+
+:root {
+    font-size: calc(1vw + 1vh + 1.5vmin);
+}
+
+body {
+    background-image: url("/static/images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: helvetica, sans-serif;
+    font-size: 1.5rem;
+}
+
+h1 {
+    font-weight: 400;
+    text-align: center;
+    padding-top: 5%;
+    text-transform: uppercase;
+}
+
+.neon {
+    color: #fff;
+    text-shadow: 0 0 5px #fff,
+    0 0 10px #952620,
+    0 0 20px #fff,
+    0 0 40px #5c7f20,
+    0 0 80px #5c7f20,
+    0 0 90px #5c7f20,
+    0 0 100px #5c7f20,
+    0 0 150px #5c7f20;
+}

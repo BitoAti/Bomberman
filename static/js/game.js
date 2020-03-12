@@ -101,12 +101,12 @@ function createFire(left, top, bomb) {
         }
     }
     if (rightCoordinateToCheck === playerCoordinateToCheck ||
-            leftCoordinateToCheck === playerCoordinateToCheck ||
-            topCoordinateToCheck === playerCoordinateToCheck ||
-            downCoordinateToCheck === playerCoordinateToCheck ||
-            centerCoordinateToCheck === playerCoordinateToCheck) {
-            alert("You are dead bitch")
-        }
+        leftCoordinateToCheck === playerCoordinateToCheck ||
+        topCoordinateToCheck === playerCoordinateToCheck ||
+        downCoordinateToCheck === playerCoordinateToCheck ||
+        centerCoordinateToCheck === playerCoordinateToCheck) {
+        alert("You are dead bitch")
+    }
 }
 
 function getBombCoordinate(left, top) {
@@ -127,17 +127,21 @@ function getBombCoordinate(left, top) {
 function createBomb() {
     const gameArea = document.getElementById("game-area");
     var bomb = document.createElement("div");
+    bomb.innerHTML = `<img src="/static/images/bomb.png" alt="bomb" width="20px" height="20px">`;
     bomb.classList.add("bomb");
-    let newcoord = getBombCoordinate(parseInt(objDiv.style.left.slice(0, -2)), parseInt(objDiv.style.top.slice(0, -2)));
-    bomb.style.left = setBombCoordinate(newcoord[0]);
-    bomb.style.top = setBombCoordinate(newcoord[1]);
+    let newCoord = getBombCoordinate(parseInt(objDiv.style.left.slice(0, -2)), parseInt(objDiv.style.top.slice(0, -2)));
+    bomb.style.left = setBombCoordinate(newCoord[0]);
+    bomb.style.top = setBombCoordinate(newCoord[1]);
     gameArea.appendChild(bomb);
     let coordinate = bomb.style.left.slice(0, -2) + '-' + bomb.style.top.slice(0, -2);
     forbiddenCoordinate.push(coordinate);
 
     setTimeout(function deleteBomb() {
         createFire(bomb.style.left, bomb.style.top, bomb);
-        bomb.remove();
+        setTimeout(function changeToFlame() {
+            bomb.remove();
+        }, 300);
+        bomb.innerHTML = `<img src="/static/images/Flame_f00.png" alt="flame" width="20px" height="20px">`;
         forbiddenCoordinate.pop(coordinate);
     }, 2000)
 
@@ -244,6 +248,7 @@ function addWallsCoordinate(top, left) {
 function createWallElement() {
     let wall = document.createElement("div");
     wall.classList.add("wall");
+    wall.innerHTML = `<img src="/static/images/brick.png" alt="player" width="20px" height="20px">`;
     return wall
 }
 
