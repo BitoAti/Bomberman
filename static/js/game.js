@@ -316,6 +316,7 @@ function placeFinishElement() {
 }
 
 function init() {
+    console.log("alma")
     objDiv = document.getElementById("image");
     objDiv.innerHTML = `<img src="/static/images/Bman_F_f00.png" alt="player" width="20px" height="20px">`;
     objDiv.style.position = 'relative';
