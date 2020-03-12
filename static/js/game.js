@@ -1,8 +1,8 @@
 var objDiv = null;
 var gameArea = document.getElementById("game-area");
 var player = document.getElementById("image");
-var widthNum = 25
-var heightNum = 13
+var widthNum = 25;
+var heightNum = 13;
 gameArea.style.width = (player.offsetWidth * widthNum).toString() + "px";
 var gameAreaWidth = gameArea.offsetWidth;
 gameArea.style.height = (player.offsetWidth * heightNum).toString();
@@ -70,7 +70,7 @@ function moveDown() {
 function saveFreeToMoveCoordinate() {
     for (let i = 0; i < gameAreaWidth / playerWidth; i++) {
         for (let n = 0; n < gameAreaHeight / playerHeight; n++) {
-            let coordinate = (i * 20).toString() + "-" + (n * 20).toString()
+            let coordinate = (i * 20).toString() + "-" + (n * 20).toString();
             freeCoordinateToMove.push(coordinate)
         }
     }
@@ -82,7 +82,7 @@ function createFire(left, top) {
 
 function getBombCoordinate(left, top) {
     let list = [];
-    console.log(typeof (left), typeof (top))
+    console.log(typeof (left), typeof (top));
     if (left % 20 !== 0) {
         list.push(left + 10);
         list.push(top);
@@ -93,7 +93,7 @@ function getBombCoordinate(left, top) {
         list.push(left);
         list.push(top);
     }
-    console.log(list)
+    console.log(list);
     return list
 }
 
@@ -151,23 +151,23 @@ function countGameAreaSize(size) {
 
 
 function saveTakenCoordinate(height, width) {
-    let coordinate = width.toString() + "-" + height.toString()
+    let coordinate = width.toString() + "-" + height.toString();
     forbiddenCoordinate.push(coordinate);
-    let coordinate1 = (width - 10).toString() + "-" + height.toString()
+    let coordinate1 = (width - 10).toString() + "-" + height.toString();
     forbiddenCoordinate.push(coordinate1);
-    let coordinate2 = (width - 10).toString() + "-" + (height - 10).toString()
+    let coordinate2 = (width - 10).toString() + "-" + (height - 10).toString();
     forbiddenCoordinate.push(coordinate2);
-    let coordinate3 = (width - 10).toString() + "-" + (height + 10).toString()
+    let coordinate3 = (width - 10).toString() + "-" + (height + 10).toString();
     forbiddenCoordinate.push(coordinate3);
-    let coordinate4 = width.toString() + "-" + (height - 10).toString()
+    let coordinate4 = width.toString() + "-" + (height - 10).toString();
     forbiddenCoordinate.push(coordinate4);
-    let coordinate5 = width.toString() + "-" + (height + 10).toString()
+    let coordinate5 = width.toString() + "-" + (height + 10).toString();
     forbiddenCoordinate.push(coordinate5);
-    let coordinate6 = (width + 10).toString() + "-" + (height - 10).toString()
+    let coordinate6 = (width + 10).toString() + "-" + (height - 10).toString();
     forbiddenCoordinate.push(coordinate6);
-    let coordinate7 = (width + 10).toString() + "-" + (height + 10).toString()
+    let coordinate7 = (width + 10).toString() + "-" + (height + 10).toString();
     forbiddenCoordinate.push(coordinate7);
-    let coordinate8 = (width + 10).toString() + "-" + height.toString()
+    let coordinate8 = (width + 10).toString() + "-" + height.toString();
     forbiddenCoordinate.push(coordinate8);
 
     let indexOfItem1 = freeCoordinateToMove.indexOf(coordinate)
@@ -219,7 +219,7 @@ function createWallElement() {
 function placeWallElement() {
     let numOfWalls = ~~(widthNum * heightNum / 3);
     for(let i = 1; i <= numOfWalls; i++){
-        let wall = createWallElement()
+        let wall = createWallElement();
         console.log(wall)
     }
 
