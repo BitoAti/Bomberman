@@ -135,6 +135,7 @@ function placeTombs() {
             saveTakenCoordinate(column * 2 * playerHeight + basePxHeight - 8, row * 2 * playerWidth + basePxWidth - 8);
             tomb.classList.add("tomb");
             gameArea.appendChild(tomb)
+
         }
     }
 }
@@ -149,7 +150,10 @@ function countGameAreaSize(size) {
     return (size - playerHeight).toString() + "px";
 }
 
-
+function deleteTombsCoordinate(top,left){
+    let coordinate = left.toString() + "-" + top.toString();
+    forbiddenCoordinate.push(coordinate);
+}
 function saveTakenCoordinate(height, width) {
     let coordinate = width.toString() + "-" + height.toString()
     forbiddenCoordinate.push(coordinate);
@@ -172,7 +176,6 @@ function saveTakenCoordinate(height, width) {
 
     let indexOfItem1 = freeCoordinateToMove.indexOf(coordinate)
     freeCoordinateToMove.splice(indexOfItem1, 1);
-
 
 
 }
@@ -218,9 +221,24 @@ function createWallElement() {
 
 function placeWallElement() {
     let numOfWalls = ~~(widthNum * heightNum / 3);
-    for(let i = 1; i <= numOfWalls; i++){
-        let wall = createWallElement()
-        console.log(wall)
+    console.log(freeCoordinateToMove[13])
+    for (let i = 1; i <= numOfWalls; i++) {
+        let wall = createWallElement();
+        let index = Math.floor(Math.random() * freeCoordinateToMove.length);
+        while (index === 0 || index === 1 || index === 13) {
+            index = Math.floor(Math.random() * freeCoordinateToMove.length);
+        }
+        let coordinateInString = freeCoordinateToMove[index];
+        // console.log(coordinateInString)
+
+        freeCoordinateToMove.splice(index, 1);
+        let array = coordinateInString.split("-");
+        wall.style.width = (player.offsetWidth).toString() + "px";
+        wall.style.height = (player.offsetHeight).toString() + "px";
+        wall.style.top = array[1] + "px";
+        wall.style.left = array[0] + "px";
+        deleteTombsCoordinate(array[1], array[0]);
+        gameArea.appendChild(wall)
     }
 
 }
@@ -232,7 +250,9 @@ function init() {
     objDiv.style.left = '0px';
     objDiv.style.top = '0px';
     saveFreeToMoveCoordinate();
-    console.log(freeCoordinateToMove);
+    freeCoordinateToMove.splice(0, 1);
+    freeCoordinateToMove.splice(0, 1);
+    freeCoordinateToMove.splice(11, 1);
     placeTombs();
     placeWallElement();
 
