@@ -1,9 +1,9 @@
 var objDiv = null;
 var gameArea = document.getElementById("game-area");
 var player = document.getElementById("image");
-gameArea.style.width = (player.offsetWidth * 51).toString() + "px";
+gameArea.style.width = (player.offsetWidth * 25).toString() + "px";
 var gameAreaWidth = gameArea.offsetWidth;
-gameArea.style.height = (player.offsetWidth * 25).toString();
+gameArea.style.height = (player.offsetWidth * 13).toString();
 var gameAreaHeight = gameArea.offsetHeight;
 var playerWidth = player.offsetWidth;
 var playerHeight = player.offsetHeight;
@@ -95,13 +95,13 @@ function getBombCoordinate(left,top) {
         list.push(left);
         list.push(top);
     }
-    console.log(list)
     return list
 }
 
 function createBomb() {
     const gameArea = document.getElementById("game-area");
     var bomb = document.createElement("div");
+    bomb.innerHTML = `<img src="/static/images/bomb.png" alt="bomb" width="20px" height="20px">`;
     bomb.classList.add("bomb");
     let newcoord = getBombCoordinate(parseInt(objDiv.style.left.slice(0, -2)),parseInt(objDiv.style.top.slice(0, -2)));
     bomb.style.left = setBombCoordinate(newcoord[0]);
@@ -153,23 +153,23 @@ function countGameAreaSize(size) {
 
 
 function saveTakenCoordinate(height, width) {
-    let coordinate = width.toString() + "-" + height.toString()
+    let coordinate = width.toString() + "-" + height.toString();
     forbiddenCoordinate.push(coordinate);
-    let coordinate1 = (width - 10).toString() + "-" + height.toString()
+    let coordinate1 = (width - 10).toString() + "-" + height.toString();
     forbiddenCoordinate.push(coordinate1);
-    let coordinate2 = (width - 10).toString() + "-" + (height - 10).toString()
+    let coordinate2 = (width - 10).toString() + "-" + (height - 10).toString();
     forbiddenCoordinate.push(coordinate2);
-    let coordinate3 = (width - 10).toString() + "-" + (height + 10).toString()
+    let coordinate3 = (width - 10).toString() + "-" + (height + 10).toString();
     forbiddenCoordinate.push(coordinate3);
-    let coordinate4 = width.toString() + "-" + (height - 10).toString()
+    let coordinate4 = width.toString() + "-" + (height - 10).toString();
     forbiddenCoordinate.push(coordinate4);
-    let coordinate5 = width.toString() + "-" + (height + 10).toString()
+    let coordinate5 = width.toString() + "-" + (height + 10).toString();
     forbiddenCoordinate.push(coordinate5);
-    let coordinate6 = (width + 10).toString() + "-" + (height - 10).toString()
+    let coordinate6 = (width + 10).toString() + "-" + (height - 10).toString();
     forbiddenCoordinate.push(coordinate6);
-    let coordinate7 = (width + 10).toString() + "-" + (height + 10).toString()
+    let coordinate7 = (width + 10).toString() + "-" + (height + 10).toString();
     forbiddenCoordinate.push(coordinate7);
-    let coordinate8 = (width + 10).toString() + "-" + height.toString()
+    let coordinate8 = (width + 10).toString() + "-" + height.toString();
     forbiddenCoordinate.push(coordinate8);
 
     // let indexOfItem = freeCoordinateToMove.indexOf(coordinate)
@@ -179,28 +179,28 @@ function saveTakenCoordinate(height, width) {
 
 function checkCoordinate(left, top, directionOfMove) {
     if (directionOfMove === "left") {
-        let string = (parseInt(left.slice(0, -2)) - 20).toString() + "-" + (parseInt(top.slice(0, -2))).toString()
+        let string = (parseInt(left.slice(0, -2)) - 20).toString() + "-" + (parseInt(top.slice(0, -2))).toString();
         if (forbiddenCoordinate.indexOf(string) !== -1) {
             return false
         } else {
             return true
         }
     } else if (directionOfMove === "right") {
-        let string = (parseInt(left.slice(0, -2)) + 20).toString() + "-" + (parseInt(top.slice(0, -2))).toString()
+        let string = (parseInt(left.slice(0, -2)) + 20).toString() + "-" + (parseInt(top.slice(0, -2))).toString();
         if (forbiddenCoordinate.indexOf(string) !== -1) {
             return false
         } else {
             return true
         }
     } else if (directionOfMove === "down") {
-        let string = (parseInt(left.slice(0, -2))).toString() + "-" + (parseInt(top.slice(0, -2)) + 20).toString()
+        let string = (parseInt(left.slice(0, -2))).toString() + "-" + (parseInt(top.slice(0, -2)) + 20).toString();
         if (forbiddenCoordinate.indexOf(string) !== -1) {
             return false
         } else {
             return true
         }
     } else if (directionOfMove === "up") {
-        let string = (parseInt(left.slice(0, -2))).toString() + "-" + (parseInt(top.slice(0, -2)) - 20).toString()
+        let string = (parseInt(left.slice(0, -2))).toString() + "-" + (parseInt(top.slice(0, -2)) - 20).toString();
         if (forbiddenCoordinate.indexOf(string) !== -1) {
             return false
         } else {
