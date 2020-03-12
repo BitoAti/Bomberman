@@ -1,8 +1,8 @@
 var objDiv = null;
 var gameArea = document.getElementById("game-area");
 var player = document.getElementById("image");
-var widthNum = 25
-var heightNum = 13
+var widthNum = 25;
+var heightNum = 13;
 gameArea.style.width = (player.offsetWidth * widthNum).toString() + "px";
 var gameAreaWidth = gameArea.offsetWidth;
 gameArea.style.height = (player.offsetWidth * heightNum).toString();
@@ -11,6 +11,7 @@ var playerWidth = player.offsetWidth;
 var playerHeight = player.offsetHeight;
 let freeCoordinateToMove = [];
 let forbiddenCoordinate = [];
+let walls = [];
 
 
 // getBoundingClientRect()
@@ -70,19 +71,46 @@ function moveDown() {
 function saveFreeToMoveCoordinate() {
     for (let i = 0; i < gameAreaWidth / playerWidth; i++) {
         for (let n = 0; n < gameAreaHeight / playerHeight; n++) {
-            let coordinate = (i * 20).toString() + "-" + (n * 20).toString()
+            let coordinate = (i * 20).toString() + "-" + (n * 20).toString();
             freeCoordinateToMove.push(coordinate)
         }
     }
 }
 
-function createFire(left, top) {
+function createFire(left, top, bomb) {
+    let leftCoordinate = parseInt(left.slice(0, -2));
+    let topCoordinate = parseInt(top.slice(0, -2));
+    let centerCoordinateToCheck = leftCoordinate.toString() + "-" + topCoordinate.toString();
+    let rightCoordinateToCheck = (leftCoordinate + 20).toString() + "-" + topCoordinate.toString();
+    let leftCoordinateToCheck = (leftCoordinate - 20).toString() + "-" + topCoordinate.toString();
+    let topCoordinateToCheck = leftCoordinate.toString() + "-" + (topCoordinate - 20).toString();
+    let downCoordinateToCheck = leftCoordinate.toString() + "-" + (topCoordinate + 20).toString();
+    let wallDivs = document.querySelectorAll(".wall");
+    let playerCoordinateToCheck = player.offsetLeft.toString() + "-" + player.offsetTop.toString();
 
+    for (let wallDiv of wallDivs) {
+        let wallCoordinateToCheck = wallDiv.offsetLeft.toString() + "-" + wallDiv.offsetTop.toString();
+        if (rightCoordinateToCheck === wallCoordinateToCheck ||
+            leftCoordinateToCheck === wallCoordinateToCheck ||
+            topCoordinateToCheck === wallCoordinateToCheck ||
+            downCoordinateToCheck === wallCoordinateToCheck) {
+            wallDiv.remove();
+            let indexOfWall = forbiddenCoordinate.indexOf(wallCoordinateToCheck);
+            forbiddenCoordinate.splice(indexOfWall, 1);
+
+        }
+    }
+    if (rightCoordinateToCheck === playerCoordinateToCheck ||
+            leftCoordinateToCheck === playerCoordinateToCheck ||
+            topCoordinateToCheck === playerCoordinateToCheck ||
+            downCoordinateToCheck === playerCoordinateToCheck ||
+            centerCoordinateToCheck === playerCoordinateToCheck) {
+            alert("You are dead bitch")
+        }
 }
 
 function getBombCoordinate(left, top) {
     let list = [];
-    console.log(typeof (left), typeof (top))
     if (left % 20 !== 0) {
         list.push(left + 10);
         list.push(top);
@@ -93,7 +121,6 @@ function getBombCoordinate(left, top) {
         list.push(left);
         list.push(top);
     }
-    console.log(list)
     return list
 }
 
@@ -109,7 +136,7 @@ function createBomb() {
     forbiddenCoordinate.push(coordinate);
 
     setTimeout(function deleteBomb() {
-        createFire(bomb.style.left, bomb.style.top);
+        createFire(bomb.style.left, bomb.style.top, bomb);
         bomb.remove();
         forbiddenCoordinate.pop(coordinate);
     }, 2000)
@@ -150,10 +177,6 @@ function countGameAreaSize(size) {
     return (size - playerHeight).toString() + "px";
 }
 
-function deleteTombsCoordinate(top,left){
-    let coordinate = left.toString() + "-" + top.toString();
-    forbiddenCoordinate.push(coordinate);
-}
 function saveTakenCoordinate(height, width) {
     let coordinate = width.toString() + "-" + height.toString();
     forbiddenCoordinate.push(coordinate);
@@ -212,6 +235,11 @@ function checkCoordinate(left, top, directionOfMove) {
     }
 }
 
+function addWallsCoordinate(top, left) {
+    let coordinate = left.toString() + "-" + top.toString();
+    forbiddenCoordinate.push(coordinate);
+
+}
 
 function createWallElement() {
     let wall = document.createElement("div");
@@ -219,9 +247,9 @@ function createWallElement() {
     return wall
 }
 
+
 function placeWallElement() {
     let numOfWalls = ~~(widthNum * heightNum / 3);
-    console.log(freeCoordinateToMove[13]);
     for (let i = 1; i <= numOfWalls; i++) {
         let wall = createWallElement();
         let index = Math.floor(Math.random() * freeCoordinateToMove.length);
@@ -237,8 +265,10 @@ function placeWallElement() {
         wall.style.height = (player.offsetHeight).toString() + "px";
         wall.style.top = array[1] + "px";
         wall.style.left = array[0] + "px";
-        deleteTombsCoordinate(array[1], array[0]);
+        addWallsCoordinate(array[1], array[0]);
         gameArea.appendChild(wall)
+        walls.push(array[1] + "-" + array[0])
+
     }
 
 }
