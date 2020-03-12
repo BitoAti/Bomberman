@@ -12,7 +12,7 @@ var playerHeight = player.offsetHeight;
 let freeCoordinateToMove = [];
 let forbiddenCoordinate = [];
 let walls = [];
-
+let tombs = [];
 
 // getBoundingClientRect()
 
@@ -77,7 +77,60 @@ function saveFreeToMoveCoordinate() {
     }
 }
 
-function createFire(left, top, bomb) {
+function showFire(left, top) {
+    if (tombs.indexOf((parseInt(left.slice(0, -2)) + 20).toString() + "-" + (parseInt(top.slice(0, -2))).toString()) === -1) {
+        let fire = document.createElement("div");
+        fire.classList.add("fire");
+        fire.style.left = ((parseInt(left.slice(0, -2)) + 20).toString() + "px");
+        fire.style.top = ((parseInt(top.slice(0, -2))).toString() + "px");
+        fire.style.position = "absolute";
+        fire.innerHTML = `<img src="/static/images/Flame_f00.png" alt="flame" width="20px" height="20px">`;
+        gameArea.append(fire);
+        setTimeout(() => {
+            fire.remove()
+        }, 300)
+    }
+
+    if (left !== "0px" && tombs.indexOf((parseInt(left.slice(0, -2)) - 20).toString() + "-" + (parseInt(top.slice(0, -2))).toString()) === -1) {
+        let fire2 = document.createElement("div");
+        fire2.classList.add("fire");
+        fire2.style.left = ((parseInt(left.slice(0, -2)) - 20).toString() + "px");
+        fire2.style.top = ((parseInt(top.slice(0, -2))).toString() + "px");
+        fire2.innerHTML = `<img src="/static/images/Flame_f00.png" alt="flame" width="20px" height="20px">`;
+        fire2.style.position = "absolute";
+        gameArea.append(fire2);
+        setTimeout(() => {
+            fire2.remove()
+        }, 300)
+    }
+    if (top !== "0px" && tombs.indexOf((parseInt(left.slice(0, -2))).toString() + "-" + (parseInt(top.slice(0, -2)) - 20).toString()) === -1) {
+        let fire3 = document.createElement("div");
+        fire3.classList.add("fire");
+        fire3.style.left = ((parseInt(left.slice(0, -2))).toString() + "px");
+        fire3.style.top = ((parseInt(top.slice(0, -2)) - 20).toString() + "px");
+        fire3.innerHTML = `<img src="/static/images/Flame_f00.png" alt="flame" width="20px" height="20px">`;
+        fire3.style.position = "absolute";
+        gameArea.append(fire3);
+        setTimeout(() => {
+            fire3.remove()
+        }, 300)
+    }
+    if (tombs.indexOf((parseInt(left.slice(0, -2))).toString() + "-" + (parseInt(top.slice(0, -2)) + 20).toString()) === -1) {
+        let fire4 = document.createElement("div");
+        fire4.classList.add("fire");
+        fire4.style.left = ((parseInt(left.slice(0, -2))).toString() + "px");
+        fire4.style.top = ((parseInt(top.slice(0, -2)) + 20).toString() + "px");
+        fire4.innerHTML = `<img src="/static/images/Flame_f00.png" alt="flame" width="20px" height="20px">`;
+        fire4.style.position = "absolute";
+        gameArea.append(fire4);
+        setTimeout(() => {
+            fire4.remove()
+        }, 300)
+    }
+
+}
+
+function createFire(left, top) {
     let leftCoordinate = parseInt(left.slice(0, -2));
     let topCoordinate = parseInt(top.slice(0, -2));
     let centerCoordinateToCheck = leftCoordinate.toString() + "-" + topCoordinate.toString();
@@ -87,7 +140,7 @@ function createFire(left, top, bomb) {
     let downCoordinateToCheck = leftCoordinate.toString() + "-" + (topCoordinate + 20).toString();
     let wallDivs = document.querySelectorAll(".wall");
     let playerCoordinateToCheck = player.offsetLeft.toString() + "-" + player.offsetTop.toString();
-
+    showFire(left, top);
     for (let wallDiv of wallDivs) {
         let wallCoordinateToCheck = wallDiv.offsetLeft.toString() + "-" + wallDiv.offsetTop.toString();
         if (rightCoordinateToCheck === wallCoordinateToCheck ||
@@ -135,14 +188,13 @@ function createBomb() {
     gameArea.appendChild(bomb);
     let coordinate = bomb.style.left.slice(0, -2) + '-' + bomb.style.top.slice(0, -2);
     forbiddenCoordinate.push(coordinate);
-
     setTimeout(function deleteBomb() {
         createFire(bomb.style.left, bomb.style.top, bomb);
         setTimeout(function changeToFlame() {
             bomb.remove();
         }, 300);
         bomb.innerHTML = `<img src="/static/images/Flame_f00.png" alt="flame" width="20px" height="20px">`;
-        forbiddenCoordinate.pop(coordinate);
+        forbiddenCoordinate.pop();
     }, 2000)
 
 
@@ -165,7 +217,9 @@ function placeTombs() {
             tomb.style.left = (row * 2 * playerWidth + 20).toString() + "px";
             saveTakenCoordinate(column * 2 * playerHeight + basePxHeight - 8, row * 2 * playerWidth + basePxWidth - 8);
             tomb.classList.add("tomb");
-            gameArea.appendChild(tomb)
+            gameArea.appendChild(tomb);
+            let coordinate = (column * 2 * playerHeight + 20).toString() + "-" + (row * 2 * playerWidth + 20).toString()
+            tombs.push(coordinate)
 
         }
     }
@@ -203,39 +257,21 @@ function saveTakenCoordinate(height, width) {
 
     let indexOfItem1 = freeCoordinateToMove.indexOf(coordinate);
     freeCoordinateToMove.splice(indexOfItem1, 1);
-
-
 }
 
 function checkCoordinate(left, top, directionOfMove) {
     if (directionOfMove === "left") {
         let string = (parseInt(left.slice(0, -2)) - 20).toString() + "-" + (parseInt(top.slice(0, -2))).toString();
-        if (forbiddenCoordinate.indexOf(string) !== -1) {
-            return false
-        } else {
-            return true
-        }
+        return forbiddenCoordinate.indexOf(string) === -1;
     } else if (directionOfMove === "right") {
         let string = (parseInt(left.slice(0, -2)) + 20).toString() + "-" + (parseInt(top.slice(0, -2))).toString();
-        if (forbiddenCoordinate.indexOf(string) !== -1) {
-            return false
-        } else {
-            return true
-        }
+        return forbiddenCoordinate.indexOf(string) === -1;
     } else if (directionOfMove === "down") {
         let string = (parseInt(left.slice(0, -2))).toString() + "-" + (parseInt(top.slice(0, -2)) + 20).toString();
-        if (forbiddenCoordinate.indexOf(string) !== -1) {
-            return false
-        } else {
-            return true
-        }
+        return forbiddenCoordinate.indexOf(string) === -1;
     } else if (directionOfMove === "up") {
         let string = (parseInt(left.slice(0, -2))).toString() + "-" + (parseInt(top.slice(0, -2)) - 20).toString();
-        if (forbiddenCoordinate.indexOf(string) !== -1) {
-            return false
-        } else {
-            return true
-        }
+        return forbiddenCoordinate.indexOf(string) === -1;
     }
 }
 
@@ -258,12 +294,7 @@ function placeWallElement() {
     for (let i = 1; i <= numOfWalls; i++) {
         let wall = createWallElement();
         let index = Math.floor(Math.random() * freeCoordinateToMove.length);
-        while (index === 0 || index === 1 || index === 13) {
-            index = Math.floor(Math.random() * freeCoordinateToMove.length);
-        }
         let coordinateInString = freeCoordinateToMove[index];
-        // console.log(coordinateInString)
-
         freeCoordinateToMove.splice(index, 1);
         let array = coordinateInString.split("-");
         wall.style.width = (player.offsetWidth).toString() + "px";
@@ -271,11 +302,17 @@ function placeWallElement() {
         wall.style.top = array[1] + "px";
         wall.style.left = array[0] + "px";
         addWallsCoordinate(array[1], array[0]);
-        gameArea.appendChild(wall)
+        gameArea.appendChild(wall);
         walls.push(array[1] + "-" + array[0])
-
     }
+}
 
+function placeFinishElement() {
+    const finish = document.createElement("div");
+    finish.classList.add("finish");
+    finish.style.left = "480px";
+    finish.style.top = "240px";
+    gameArea.appendChild(finish)
 }
 
 function init() {
@@ -290,6 +327,7 @@ function init() {
     freeCoordinateToMove.splice(11, 1);
     placeTombs();
     placeWallElement();
+    placeFinishElement();
 
 }
 
