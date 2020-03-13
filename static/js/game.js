@@ -23,15 +23,27 @@ function getKeyAndMove(e) {
     switch (key_code) {
         case 37: //left arrow key
             moveLeft();
+            setTimeout(() => {
+                checkIfItsWin()
+            }, 1000)
             break;
         case 38: //Up arrow key
             moveUp();
+            setTimeout(() => {
+                checkIfItsWin()
+            }, 1000)
             break;
         case 39: //right arrow key
             moveRight();
+            setTimeout(() => {
+                checkIfItsWin()
+            }, 1000)
             break;
         case 40: //down arrow key
             moveDown();
+            setTimeout(() => {
+                checkIfItsWin()
+            }, 1000)
             break;
         case 32: //space down
             createBomb();
@@ -78,7 +90,7 @@ function saveFreeToMoveCoordinate() {
 }
 
 function showFire(left, top) {
-    if (tombs.indexOf((parseInt(left.slice(0, -2)) + 20).toString() + "-" + (parseInt(top.slice(0, -2))).toString()) === -1) {
+    if (left !== "480px" && tombs.indexOf((parseInt(left.slice(0, -2)) + 20).toString() + "-" + (parseInt(top.slice(0, -2))).toString()) === -1) {
         let fire = document.createElement("div");
         fire.classList.add("fire");
         fire.style.left = ((parseInt(left.slice(0, -2)) + 20).toString() + "px");
@@ -115,7 +127,7 @@ function showFire(left, top) {
             fire3.remove()
         }, 300)
     }
-    if (tombs.indexOf((parseInt(left.slice(0, -2))).toString() + "-" + (parseInt(top.slice(0, -2)) + 20).toString()) === -1) {
+    if (top !== "240px" && tombs.indexOf((parseInt(left.slice(0, -2))).toString() + "-" + (parseInt(top.slice(0, -2)) + 20).toString()) === -1) {
         let fire4 = document.createElement("div");
         fire4.classList.add("fire");
         fire4.style.left = ((parseInt(left.slice(0, -2))).toString() + "px");
@@ -127,6 +139,16 @@ function showFire(left, top) {
             fire4.remove()
         }, 300)
     }
+
+}
+
+function checkIfItsWin() {
+    console.log(player.offsetLeft, player.offsetTop)
+    if (player.offsetLeft === 480 && player.offsetTop === 240) {
+        alert("You win")
+        init()
+    }
+
 
 }
 
@@ -158,7 +180,11 @@ function createFire(left, top) {
         topCoordinateToCheck === playerCoordinateToCheck ||
         downCoordinateToCheck === playerCoordinateToCheck ||
         centerCoordinateToCheck === playerCoordinateToCheck) {
-        alert("You are dead bitch")
+        setTimeout(() => {
+            alert("You are dead!")
+            init()
+        },200)
+
     }
 }
 
@@ -218,7 +244,7 @@ function placeTombs() {
             saveTakenCoordinate(column * 2 * playerHeight + basePxHeight - 8, row * 2 * playerWidth + basePxWidth - 8);
             tomb.classList.add("tomb");
             gameArea.appendChild(tomb);
-            let coordinate = (column * 2 * playerHeight + 20).toString() + "-" + (row * 2 * playerWidth + 20).toString()
+            let coordinate = (row * 2 * playerHeight + 20).toString() + "-" + (column * 2 * playerWidth + 20).toString()
             tombs.push(coordinate)
 
         }
@@ -278,7 +304,6 @@ function checkCoordinate(left, top, directionOfMove) {
 function addWallsCoordinate(top, left) {
     let coordinate = left.toString() + "-" + top.toString();
     forbiddenCoordinate.push(coordinate);
-
 }
 
 function createWallElement() {
@@ -316,7 +341,6 @@ function placeFinishElement() {
 }
 
 function init() {
-    console.log("alma")
     objDiv = document.getElementById("image");
     objDiv.innerHTML = `<img src="/static/images/Bman_F_f00.png" alt="player" width="20px" height="20px">`;
     objDiv.style.position = 'relative';
