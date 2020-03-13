@@ -46,12 +46,7 @@ function moveLeft() {
     }
 }
 
-function moveUp() {
-    if (objDiv.style.top !== '0px' && checkCoordinate(objDiv.style.left, objDiv.style.top, "up") === true) {
-        objDiv.style.top = parseInt(objDiv.style.top) - 10 + 'px';
-    }
 
-}
 
 function moveRight() {
     if (objDiv.style.left !== countGameAreaSize(gameAreaWidth) && checkCoordinate(objDiv.style.left, objDiv.style.top, "right") === true) {
@@ -67,6 +62,14 @@ function moveDown() {
 
 }
 
+function moveUp() {
+    if (objDiv.style.top !== '0px' && checkCoordinate(objDiv.style.left, objDiv.style.top, "up") === true) {
+        objDiv.style.top = parseInt(objDiv.style.top) - 10 + 'px';
+    }
+
+}
+
+
 // --------------------Game elements--------------------------//
 function saveFreeToMoveCoordinate() {
     for (let i = 0; i < gameAreaWidth / playerWidth; i++) {
@@ -77,7 +80,7 @@ function saveFreeToMoveCoordinate() {
     }
 }
 
-function createFire(left, top, bomb) {
+function createFire(left, top) {
     let leftCoordinate = parseInt(left.slice(0, -2));
     let topCoordinate = parseInt(top.slice(0, -2));
     let centerCoordinateToCheck = leftCoordinate.toString() + "-" + topCoordinate.toString();
@@ -262,7 +265,6 @@ function placeWallElement() {
             index = Math.floor(Math.random() * freeCoordinateToMove.length);
         }
         let coordinateInString = freeCoordinateToMove[index];
-        // console.log(coordinateInString)
 
         freeCoordinateToMove.splice(index, 1);
         let array = coordinateInString.split("-");
@@ -271,7 +273,7 @@ function placeWallElement() {
         wall.style.top = array[1] + "px";
         wall.style.left = array[0] + "px";
         addWallsCoordinate(array[1], array[0]);
-        gameArea.appendChild(wall)
+        gameArea.appendChild(wall);
         walls.push(array[1] + "-" + array[0])
 
     }
